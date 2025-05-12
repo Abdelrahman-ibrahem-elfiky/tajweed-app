@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تطبيق أحكام التجويد</title>
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      direction: rtl;
+      text-align: right;
+      margin: 30px;
+      background-color: #f7f7f7;
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      width: 300px;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+      background-color: white;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+    }
+    th {
+      background-color: #2980b9;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📘 تطبيق إدخال أحكام التجويد</h2>
+
+  <label>غنة:</label>
+  <input type="text" id="ghunna">
+
+  <label>قلقلة:</label>
+  <input type="text" id="qalqala">
+
+  <label>لثوية:</label>
+  <input type="text" id="lithawiya">
+
+  <label>مد:</label>
+  <input type="text" id="mad">
+
+  <br>
+  <button onclick="addRow()">➕ أضف للجدول</button>
+
+  <table id="resultTable">
+    <thead>
+      <tr>
+        <th>غنة</th>
+        <th>قلقلة</th>
+        <th>لثوية</th>
+        <th>مد</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    function addRow() {
+      const ghunna = document.getElementById('ghunna').value.split('-');
+      const qalqala = document.getElementById('qalqala').value.split('-');
+      const lithawiya = document.getElementById('lithawiya').value.split('-');
+      const mad = document.getElementById('mad').value.split('-');
+
+      // التأكد من أن كل المدخلات مش فارغة
+      if (!(ghunna.length || qalqala.length || lithawiya.length || mad.length)) return;
+
+      const tableBody = document.querySelector('#resultTable tbody');
+      const maxLength = Math.max(ghunna.length, qalqala.length, lithawiya.length, mad.length);
+
+      for (let i = 0; i < maxLength; i++) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${ghunna[i] || ''}</td>
+          <td>${qalqala[i] || ''}</td>
+          <td>${lithawiya[i] || ''}</td>
+          <td>${mad[i] || ''}</td>
+        `;
+        tableBody.appendChild(row);
+      }
+
+      // مسح المدخلات بعد إضافة البيانات
+      document.getElementById('ghunna').value = '';
+      document.getElementById('qalqala').value = '';
+      document.getElementById('lithawiya').value = '';
+      document.getElementById('mad').value = '';
+    }
+  </script>
+
+</body>
+</html>
